@@ -1,0 +1,42 @@
+@{
+  Layout = "_Layout";
+}
+
+@using Factory.Models
+
+<div class="jumbotron">
+  <h2>All Engineers and Machines</h2>
+</div>
+
+@if (Model.Machines.Count == 0)
+{
+  <p>No machines have been added to the database yet.</p>
+}
+else
+{
+  <ul>
+    @foreach (Machine machine in Model.Machines)
+    {
+      <li>@Html.ActionLink($"{machine.Name}", "Details", "Machines", new { id = machine.MachineId })</li>
+    }
+  </ul>
+}
+<hr>
+@if (Model.Engineers.Count == 0)
+{
+  <p>No engineers have been added to the database yet.</p>
+}
+else
+{
+  <ul>
+    @foreach (Engineer engineer in Model.Engineers)
+    {
+      <li>@Html.ActionLink($"{engineer.FirstName} {engineer.LastName}", "Details", "Engineers", new { id = engineer.EngineerId })</li>
+    }
+  </ul>
+}
+<hr>
+<div class="link-buttons">
+  <a class="btn btn-primary btn-lg" href="~/Engineers/Create">Add new engineer</a>
+  <a class="btn btn-primary btn-lg" href="~/Machines/Create">Add new machine</a>
+</div>
