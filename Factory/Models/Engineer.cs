@@ -18,6 +18,8 @@ namespace Factory.Models
     [Display(Name = "Job Title")]
     public string JobTitle { get; set; }
     [Display(Name = "Hire Date")]
+    [DataType(DataType.Date)]
+    [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
     public DateTime HireDate { get; set; }
     public virtual ICollection<EngineerMachine> JoinEntities { get; set; }
   }
