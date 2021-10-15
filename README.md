@@ -35,7 +35,7 @@ This web application will allow the user to create engineers and machines, and a
 ```
 {
   "ConnectionStrings": {
-      "DefaultConnection": "Server=localhost;Port=3306;database=factory;uid=root;pwd=YOUR_PASSWORD;"
+      "DefaultConnection": "Server=localhost;Port=3306;database=benjamin_wilson;uid=root;pwd=YOUR_PASSWORD;"
   }
 }
 ```

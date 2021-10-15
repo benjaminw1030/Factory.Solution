@@ -14,7 +14,8 @@ namespace Factory.Migrations
                 {
                     EngineerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
+                    FirstName = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
+                    LastName = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     JobTitle = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     HireDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
