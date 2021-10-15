@@ -24,20 +24,22 @@ else
   <p>The following engineers are authorized to repair this equipment:</p> 
   @foreach (var join in Model.JoinEntities)
   {
-    <li>
-    @Html.ActionLink($"{@join.Engineer.FirstName} {@join.Engineer.LastName}", "Details", "Engineers", new { id = @join.Engineer.EngineerId }) - 
-    @using (Html.BeginForm("DeleteEngineer", "Machines"))
-    {
-      @Html.Hidden("joinId", @join.EngineerMachineId)
-      <input type="submit" value="Revoke Authorization" class = "btn btn-danger btn-sm">
-    }
-    </li>
+    <div class="delete-join">
+      <li>
+      @Html.ActionLink($"{@join.Engineer.FirstName} {@join.Engineer.LastName}", "Details", "Engineers", new { id = @join.Engineer.EngineerId }) -
+      @using (Html.BeginForm("DeleteEngineer", "Machines"))
+      {
+        @Html.Hidden("joinId", @join.EngineerMachineId)
+        <input type="submit" value="Revoke Authorization" class = "btn btn-danger btn-sm">
+      }
+      </li>
+    </div>
   }
 }
 <hr>
 @if (ViewBag.ValidItems.Count == 0)
 {
-  <p>All engineers in the database are authorized to repair @Model.Name.</p>
+  <p>All engineers in the database are authorized to repair the @Model.Name.</p>
 }
 else
 {

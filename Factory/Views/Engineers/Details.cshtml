@@ -22,17 +22,19 @@
 }
 else
 {
-  <p>This engineer is authorized to repair the following equipment:</p> 
+  <p>This engineer is authorized to repair the following equipment:</p>
   @foreach (var join in Model.JoinEntities)
   {
-    <li>
-    @Html.ActionLink($"{@join.Machine.Name}", "Details", "Machines", new { id = @join.Machine.MachineId }) - 
-    @using (Html.BeginForm("DeleteMachine", "Engineers"))
-    {
-      @Html.Hidden("joinId", @join.EngineerMachineId)
-      <input type="submit" value="Revoke Authorization" class = "btn btn-danger btn-sm">
-    }
-    </li>
+    <div class="delete-join">
+      <li>
+        @Html.ActionLink($"{@join.Machine.Name}", "Details", "Machines", new { id = @join.Machine.MachineId }) -
+        @using (Html.BeginForm("DeleteMachine", "Engineers"))
+        {
+          @Html.Hidden("joinId", @join.EngineerMachineId)
+          <input type="submit" value="Revoke Authorization" class="btn btn-danger btn-sm">
+        }
+      </li>
+    </div>
   }
 }
 <hr>

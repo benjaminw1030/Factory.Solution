@@ -1,14 +1,47 @@
 #footer {
   display: flex;
-	position:fixed;
-	bottom:0px;
-	left:0px;
-	width:100%;
-	color:rgb(0, 0, 0);
-	background:hsl(42, 81%, 57%, 0.9);
-	padding:8px;
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	color: rgb(0, 0, 0);
+	background: rgba(57, 234, 146, 0.9);
+	padding: 8px;
   justify-content: center;
 }
-#footer p{
-  margin:5px;
+
+#footer p {
+  margin: 5px;
+}
+
+#footer a {
+	color: rgb(0, 0, 0);
+}
+
+.link-buttons {
+	justify-content: center;
+	text-align: center;
+}
+
+.link-buttons form { 
+	display: inline;
+}
+
+.jumbotron {
+	padding: 30px;
+	margin-top: 10px;
+	background-color: rgba(57, 234, 146, 0.9);
+}
+
+body {
+	margin-bottom: auto;
+	height: 100%;
+}
+
+.details {
+	list-style-type: none;
+}
+
+.delete-join form{
+	display: inline;
 }
