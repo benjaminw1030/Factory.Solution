@@ -37,11 +37,18 @@ namespace Factory.Controllers
 
     public ActionResult Details(int id)
     {
-      ViewBag.MachineId = new SelectList(_db.Machines, "MachineId", "Name");
       var thisEngineer = _db.Engineers
         .Include(engineer => engineer.JoinEntities)
         .ThenInclude(join => join.Machine)
         .FirstOrDefault(engineer => engineer.EngineerId == id);
+      List<Machine> engineerMachines = new List<Machine> { };
+      foreach(EngineerMachine join in thisEngineer.JoinEntities)
+      {
+        engineerMachines.Add(join.Machine);
+      }
+      var machineSelect = _db.Machines.Where(machine => !engineerMachines.Contains(machine)).ToList();
+      ViewBag.MachineId = new SelectList(machineSelect, "MachineId", "Name");
+      ViewBag.ValidItems = machineSelect;
       return View(thisEngineer);
     }
 
@@ -86,12 +93,12 @@ namespace Factory.Controllers
     }
 
     [HttpPost]
-    public ActionResult DeleteMachine(int engineerId, int joinId)
+    public ActionResult DeleteMachine(int joinId)
     {
       var joinEntry = _db.EngineerMachine.FirstOrDefault(entry => entry.EngineerMachineId == joinId);
       _db.EngineerMachine.Remove(joinEntry);
       _db.SaveChanges();
-      return RedirectToAction("Details", new { id = engineerId });
+      return RedirectToAction("Details", new { id = joinEntry.EngineerId });
     }
   }
 }

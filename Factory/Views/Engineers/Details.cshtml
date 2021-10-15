@@ -1,0 +1,59 @@
+@{
+  Layout = "_Layout";
+  string dateOnly = Model.HireDate.ToString("d");
+}
+
+@model Factory.Models.Engineer;
+
+<div class="jumbotron">
+  <h2>Details for @Model.FirstName @Model.LastName</h2>
+</div>
+
+<ul class="details">
+  <li>@Html.DisplayNameFor(model => model.FirstName): @Html.DisplayFor(model => model.FirstName)</li>
+  <li>@Html.DisplayNameFor(model => model.LastName): @Html.DisplayFor(model => model.LastName)</li>
+  <li>@Html.DisplayNameFor(model => model.JobTitle): @Html.DisplayFor(model => model.JobTitle)</li>
+  <li>@Html.DisplayNameFor(model => model.HireDate): @Html.DisplayFor(model => model.HireDate)</li>
+</ul>
+
+@if (Model.JoinEntities.Count == 0)
+{
+  <p>This engineer is not yet authorized to repair any equipment.</p>
+}
+else
+{
+  <p>This engineer is authorized to repair the following equipment:</p> 
+  @foreach (var join in Model.JoinEntities)
+  {
+    <li>
+    @Html.ActionLink($"{@join.Machine.Name}", "Details", "Machines", new { id = @join.Machine.MachineId }) - 
+    @using (Html.BeginForm("DeleteMachine", "Engineers"))
+    {
+      @Html.Hidden("joinId", @join.EngineerMachineId)
+      <input type="submit" value="Revoke Authorization" class = "btn btn-danger btn-sm">
+    }
+    </li>
+  }
+}
+<hr>
+@if (ViewBag.ValidItems.Count == 0)
+{
+  <p>@Model.FirstName @Model.LastName is authorized to repair all currently installed machines.</p>
+}
+else
+{
+  @using (Html.BeginForm("AddMachine", "Engineers"))
+  {
+    @Html.HiddenFor(model => model.EngineerId)
+
+    @Html.Label("Add Machine")
+    @Html.DropDownList("MachineId")
+    <input type="submit" value="Add Machine" class="btn btn-primary btn-lg" />
+  }
+}
+
+<hr>
+<div class="link-buttons">
+  <a class="btn btn-primary btn-lg" href="~/Engineers/Edit/@Model.EngineerId">Edit Engineer</a>
+  <a class="btn btn-primary btn-lg" href="~/Engineers/Delete/@Model.EngineerId">Delete Engineer</a>
+</div>
