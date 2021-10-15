@@ -8,5 +8,10 @@ namespace Factory.Controllers
     {
       return View();
     }
+
+    public ActionResult All()
+    {
+      
+    }
   }
 }
