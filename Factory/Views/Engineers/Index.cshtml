@@ -17,11 +17,11 @@ else
   <ul>
     @foreach (Engineer engineer in Model)
     {
-      <li>@Html.ActionLink($"{engineer.Name}", "Details", new { id = engineer.EngineerId })</li>
+      <li>@Html.ActionLink($"{engineer.FirstName} {engineer.LastName}", "Details", new { id = engineer.EngineerId })</li>
     }
   </ul>
 }
 <hr>
 <div class="link-buttons">
-  <a class="btn btn-primary btn-lg" href="./Create">Add new engineer</a>
+  <a class="btn btn-primary btn-lg" href="~/Engineers/Create">Add new engineer</a>
 </div>
