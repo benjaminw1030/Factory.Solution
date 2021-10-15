@@ -37,11 +37,18 @@ namespace Factory.Controllers
 
     public ActionResult Details(int id)
     {
-      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name");
       var thisMachine = _db.Machines
         .Include(machine => machine.JoinEntities)
         .ThenInclude(join => join.Engineer)
         .FirstOrDefault(machine => machine.MachineId == id);
+      List<Engineer> engineerMachines = new List<Engineer> { };
+      foreach(EngineerMachine join in thisMachine.JoinEntities)
+      {
+        engineerMachines.Add(join.Engineer);
+      }
+      var engineerSelect = _db.Engineers.Where(engineer => !engineerMachines.Contains(engineer)).ToList();
+      ViewBag.EngineerId = new SelectList(engineerSelect, "EngineerId", $"FirstName");
+      ViewBag.ValidItems = engineerSelect;
       return View(thisMachine);
     }
 
@@ -75,7 +82,7 @@ namespace Factory.Controllers
     }
 
     [HttpPost]
-    public ActionResult AddMachine(Machine machine, int engineerId)
+    public ActionResult AddEngineer(Machine machine, int engineerId)
     {
       if (engineerId != 0)
       {
@@ -86,12 +93,12 @@ namespace Factory.Controllers
     }
 
     [HttpPost]
-    public ActionResult DeleteMachine(int machineId, int joinId)
+    public ActionResult DeleteEngineer(int machineId, int joinId)
     {
       var joinEntry = _db.EngineerMachine.FirstOrDefault(entry => entry.EngineerMachineId == joinId);
       _db.EngineerMachine.Remove(joinEntry);
       _db.SaveChanges();
-      return RedirectToAction("Details", new { id = machineId });
+      return RedirectToAction("Details", new { id = joinEntry.MachineId });
     }
   }
 }

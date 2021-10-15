@@ -1,0 +1,58 @@
+@{
+  Layout = "_Layout";
+  string dateOnly = Model.CalibrationDate.ToString("d");
+}
+
+@model Factory.Models.Machine;
+
+<div class="jumbotron">
+  <h2>Details for @Model.Name</h2>
+</div>
+
+<ul class="details">
+  <li>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</li>
+  <li>@Html.DisplayNameFor(model => model.Function): @Html.DisplayFor(model => model.Function)</li>
+  <li>@Html.DisplayNameFor(model => model.CalibrationDate): @dateOnly</li>
+</ul>
+
+@if (Model.JoinEntities.Count == 0)
+{
+  <p>No engineers are currently authorized to repair this equipment.</p>
+}
+else
+{
+  <p>The following engineers are authorized to repair this equipment:</p> 
+  @foreach (var join in Model.JoinEntities)
+  {
+    <li>
+    @Html.ActionLink($"{@join.Engineer.FirstName} {@join.Engineer.LastName}", "Details", "Engineers", new { id = @join.Engineer.EngineerId }) - 
+    @using (Html.BeginForm("DeleteEngineer", "Machines"))
+    {
+      @Html.Hidden("joinId", @join.EngineerMachineId)
+      <input type="submit" value="Revoke Authorization" class = "btn btn-danger btn-sm">
+    }
+    </li>
+  }
+}
+<hr>
+@if (ViewBag.ValidItems.Count == 0)
+{
+  <p>All engineers in the database are authorized to repair @Model.Name.</p>
+}
+else
+{
+  @using (Html.BeginForm("AddEngineer", "Machines"))
+  {
+    @Html.HiddenFor(model => model.MachineId)
+
+    @Html.Label("Add Engineer")
+    @Html.DropDownList("EngineerId")
+    <input type="submit" value="Add Engineer" class="btn btn-primary btn-lg" />
+  }
+}
+
+<hr>
+<div class="link-buttons">
+  <a class="btn btn-primary btn-lg" href="~/Machines/Edit/@Model.MachineId">Edit Machine</a>
+  <a class="btn btn-primary btn-lg" href="~/Machines/Delete/@Model.MachineId">Delete Machine</a>
+</div>

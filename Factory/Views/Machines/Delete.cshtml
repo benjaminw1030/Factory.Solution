@@ -1,0 +1,18 @@
+@{
+  Layout = "_Layout";
+}
+
+<div class="jumbotron">
+  <h2>Deleting @Model.Name</h2>
+</div>
+
+<p>Are you sure?</p>
+
+<hr>
+<div class="link-buttons">
+  @using (Html.BeginForm())
+  {
+    <input type="submit" value="Yes" class="btn btn-primary btn-lg" />
+  }
+  <a class="btn btn-primary btn-lg" href="~/Machines/Details/@Model.MachineId">No</a>
+</div>

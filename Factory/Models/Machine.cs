@@ -14,6 +14,8 @@ namespace Factory.Models
     public string Name { get; set; }
     public string Function { get; set; }
     [Display(Name = "Calibration Date")]
+    [DataType(DataType.Date)]
+    [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
     public DateTime CalibrationDate { get; set; }
     public virtual ICollection<EngineerMachine> JoinEntities { get; set; }
   }
