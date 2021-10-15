@@ -1,0 +1,14 @@
+#footer {
+  display: flex;
+	position:fixed;
+	bottom:0px;
+	left:0px;
+	width:100%;
+	color:rgb(0, 0, 0);
+	background:hsl(42, 81%, 57%, 0.9);
+	padding:8px;
+  justify-content: center;
+}
+#footer p{
+  margin:5px;
+}
